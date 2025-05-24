@@ -1,36 +1,19 @@
 from django.shortcuts import render
-#from django.http import HttpResponse #pra funcionar o errado
 from cars.models import Car
 
-def cars_view(request):
-    cars = Car.objects.all() #tudo do cars
-    print(cars)
+def cars_view(request): #faz um get que pega todas os dados como objeto
+    #print(request.GET.get('search')) #vai passar tudo o que o usuario passar na url
+    cars = Car.objects.all().order_by('model') #vai buscar todos os carros e ordernar por midelo,se colocar - faz o contrario
+    search = request.GET.get('search') #o search é o que coloca na nu url,se nao passar algum vai dar erro por dar um valor nulo
+
+    if search: #ai se fizer uma busca vai achar,se não colocar parametro vai mostrar tudo+
+        cars = Car.objects.filter(model__icontains=search) #vai buscar o valor e faz um filtro pelo modelo,icontains ignona uppercase
+        #cars = Car.objects.filter(model__contains=search) #vai buscar o valor e faz um filtro pelo modelo
+        
     
-    
-    return render(request, #request igual a dados e requisições e depois coloca nome do html(ele vai automaticamente no templates
-                   'cars.html',
-                     #{'cars': { 'model': 'astra 2.0'} } #aqui é um carro fixo
-                     {'cars' : cars}
-    ) 
-# a função render renderiza o http e passa pro usuario,meio campo entre views e usuario e a ultima é o contexto
+    return render(
+        request, 
+        'cars.html',
+        {'cars': cars}
+    )
 
-
-
-
-
-
-#isso tudo é um comentario de algo que funciona só que não deve ser feito
- #   def cars_view(request):
-  #      html = '''
-   #         <html>
-    #            <head>
-     #               <title>Meus Carros</title>
-      #          </head>
-       #         <body>
-        #            <h1>Carros irados</h1>
-         #           <h3>só carro top<h3>
-          #      </body
-           # <html>
-    #
-#
-#        return HttpResponse(html) #voce pode retornar html direto daqui só que não deve

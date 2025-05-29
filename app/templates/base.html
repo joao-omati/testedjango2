@@ -72,6 +72,10 @@
   <header>
     <nav>
       <ul>
+        {% if user.is_authenticated %} <!-- pra checar se ta logado vai mostrar -->
+          <li>Olá, {{ user.username }}</li>
+        {% endif %}
+
         <li><a href="{% url 'cars_list' %}">Carros</a></li>
          <li><a href="{% url 'new_car' %}">Cadastrar carro</a></li>
       </ul>
@@ -88,3 +92,10 @@
   </footer>
 </body>
 </html>
+
+<!-- DEBUG -->
+<div style="background: yellow; padding: 10px;">
+  <p>Usuário: {{ user }}</p>
+  <p>Autenticado: {{ user.is_authenticated }}</p>
+  <p>Username: {{ user.username }}</p>
+</div>

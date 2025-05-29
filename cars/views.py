@@ -2,21 +2,17 @@ from django.shortcuts import render, redirect
 from cars.models import Car
 from cars.forms import CarModelForm #importar os formularios
 
-def cars_view(request): #faz um get que pega todas os dados como objeto
-    #print(request.GET.get('search')) #vai passar tudo o que o usuario passar na url
-    cars = Car.objects.all().order_by('model') #vai buscar todos os carros e ordernar por midelo,se colocar - faz o contrario
-    search = request.GET.get('search') #o search é o que coloca na nu url,se nao passar algum vai dar erro por dar um valor nulo
+def cars_view(request):
+    cars = Car.objects.all().order_by('model')
+    search = request.GET.get('search')
 
-    if search: #ai se fizer uma busca vai achar,se não colocar parametro vai mostrar tudo+
-        cars = Car.objects.filter(model__icontains=search) #vai buscar o valor e faz um filtro pelo modelo,icontains ignona uppercase
-        #cars = Car.objects.filter(model__contains=search) #vai buscar o valor e faz um filtro pelo modelo
-        
+    if search:
+        cars = cars.filter(model__icontains=search)
     
-    return render(
-        request, 
-        'cars.html',
-        {'cars': cars}
-    )
+    return render(request, 'cars.html', {
+        'cars': cars,
+        'user': request.user  # Garante que o usuário está no contexto
+    })
 
 def new_car_view(request):
     if request.method == 'POST': #quando for post(preencher os dados)

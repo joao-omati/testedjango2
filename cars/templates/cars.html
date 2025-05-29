@@ -92,6 +92,11 @@
         background-color: #108eb8;
     }
   </style>
+{% if user.is_authenticated %}
+    <p>DEBUG: Usuário logado como {{ user.username }}</p>
+{% else %}
+    <p>DEBUG: Usuário NÃO está logado</p>
+{% endif %}
 
   <form method="GET" action="{% url 'cars_list' %}"> 
     <input type="text" name="search" placeholder="Buscar carro...">

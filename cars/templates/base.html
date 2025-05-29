@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -65,15 +65,22 @@
     nav ul li.active a:hover {
         background-color: #999;
     }
-
   </style>
 </head>
 <body>
   <header>
     <nav>
       <ul>
-        <li><a href="{% url 'cars_list' %}">Carros</a></li>
-         <li><a href="{% url 'new_car' %}">Cadastrar carro</a></li>
+        {% if user.is_authenticated %}
+          <li>Olá, {{ user.username }}</li>
+          <li><a href="{% url 'new_car' %}">Cadastrar carro</a></li>
+          <li><a href="{% url 'cars_list' %}">Carros</a></li>
+          <li><a href="{% url 'logout' %}">Sair</a></li>
+        {% else %}
+          <li><a href="{% url 'cars_list' %}">Carros</a></li>
+          <li><a href="{% url 'register' %}">Cadastre-se</a></li>
+          <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
       </ul>
     </nav>
   </header>

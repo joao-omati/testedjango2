@@ -1,4 +1,4 @@
-{% extends 'base.html' %} <!--- vai usar a base como herança -->
+{% extends "base.html" %}
 
 {% block content %}
   <style>
@@ -91,14 +91,19 @@
     button[type="submit"]:hover {
         background-color: #108eb8;
     }
-  </style>
-{% if user.is_authenticated %}
-    <p>DEBUG: Usuário logado como {{ user.username }}</p>
-{% else %}
-    <p>DEBUG: Usuário NÃO está logado</p>
-{% endif %}
 
-  <form method="GET" action="{% url 'cars_list' %}"> 
+    a {
+      font-size: 18px;
+      color: #333;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #0096c7;
+    }
+  </style>
+
+  <form method="GET" action="{% url 'cars_list' %}">
     <input type="text" name="search" placeholder="Buscar carro...">
     <button type="submit">Buscar</button>
   </form>
@@ -106,11 +111,13 @@
   <div class="car-grid">
     {% if cars %}
       {% for car in cars %}
-        <div class="car-card">
-          <img src="{{ car.image.url }}" alt="{{ car.model }} - {{ car.brand }}">
-          <h2>{{ car.brand }} {{ car.model }}</h2>
-          <p>{{ car.factory_year }} - R$ {{ car.value }}</p>
-        </div>
+        <a href="{% url 'car_detail' car.pk %}">
+          <div class="car-card">
+            <alt="{{ car.model }} - {{ car.brand }}">
+            <h2>{{ car.brand }} {{ car.model }}</h2>
+            <p>{{ car.factory_year }} - R$ {{ car.value }}</p>
+          </div>
+        </a>
       {% endfor %}
     {% else %}
       <p class="no-results">Nenhum carro encontrado.</p>

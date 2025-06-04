@@ -1,8 +1,7 @@
-from django.shortcuts import render, redirect
 from cars.models import Car
 from cars.forms import CarModelForm #importar os formularios
 from django.views import View #importar a classe
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
 
 #class CarsView(View):
 
@@ -36,16 +35,22 @@ class CarsListView(ListView): #ela ja tem essas propriedades e já tem o metodo 
 
 
 
-class NewCarView(View):
+#class NewCarView(View):
 
-    def get(self, request):
-        new_car_form = CarModelForm()
-        return render(request, 'new_car.html', { 'new_car_form': new_car_form }) #vai retornar renderizando pro html
+    #def get(self, request):
+        #new_car_form = CarModelForm()
+        #return render(request, 'new_car.html', { 'new_car_form': new_car_form }) #vai retornar renderizando pro html
 
     
-    def post(self, request):
-        new_car_form = CarModelForm(request.POST, request.FILES) #vai pegar os dados e o files é pra imagem
-        if new_car_form.is_valid(): #ele executa todas as validações antes de executar essse is valid
-            new_car_form.save() #precisa criar o metodo save
-            return redirect('cars_list')
-        return render(request, 'new_car.html', { 'new_car_form': new_car_form}) # tem que ter esse retorno por questão do if
+    #def post(self, request):
+        #new_car_form = CarModelForm(request.POST, request.FILES) #vai pegar os dados e o files é pra imagem
+        #if new_car_form.is_valid(): #ele executa todas as validações antes de executar essse is valid
+            #new_car_form.save() #precisa criar o metodo save
+            #return redirect('cars_list')
+        #return render(request, 'new_car.html', { 'new_car_form': new_car_form}) # tem que ter esse retorno por questão do if
+
+class NewCarCreateView(CreateView): #nao se esqueça de checar os templates
+    model = Car
+    form_class = CarModelForm
+    template_name = 'new_car.html'
+    success_url = '/cars/' #pra qual url mandar

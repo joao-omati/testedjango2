@@ -5,7 +5,7 @@
         {% csrf_token %} <!--- é uma proteção do djanbo basica -->
         <table>
         
-        {{ new_car_form.as_table }} <!--- =vai chamar o formulario e as_p bota cada campo em um paragrafo novo  e table tem que botar entre tables-->
+        {{ form.as_table }} <!--- =vai chamar o formulario e as_p bota cada campo em um paragrafo novo  e table tem que botar entre tables-->
     </table>
 
     <input type="submit" value = "cadastrar" class = "btn btn-primary" > <!--submiut pra executar e a class só pra marcar  -->

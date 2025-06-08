@@ -20,3 +20,15 @@ class Car(models.Model):
 
     def __str__(self):
         return self.model
+
+class CarInventory(models.Model):
+    cars_count = models.IntegerField()
+    cars_value = models.FloatField()
+    created_at = models.DateTimeField(auto_now_add = True) #armazenar data e toda vez que é criado um registro o django ja grava a data atuaç
+   
+    class Meta:
+        ordering = ['-created_at'] #fixar de forma decrescente
+
+    def __str__(self):
+        return f'{self.cars_count} - {self.cars_value}' #ele vai mostrar uma string bonitinha 
+        #vai mostrar a quantidade de carros e o valor monetario 

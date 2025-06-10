@@ -14,6 +14,10 @@ def car_inventory_update(): #esse codigo tava nas duas só que colocando em um s
         cars_value = cars_value
     )
 
+@receiver (pre_save,sender = Car)
+def car_pre_save(sender, instance, **kwarfs):
+    if not instance.bio:
+        instance.bio= 'bio gerada automaticamente!' 
 
 @receiver(post_save, sender = Car) #vai ouvir tudo que ta acontecendo no post-save
 def car_post_save(sender, instance, **kwarfs): #**kwargs é pra pegar qualquer outro parametro e instance é o novo dado
